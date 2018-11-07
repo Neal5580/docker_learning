@@ -1,0 +1,26 @@
+#version of docker-compose
+version: '3'
+
+#docker services like containers
+services:
+
+  web:
+  #as we have Dockerfile.dev which is not standard dockerfile name (standard name: Dockerfile),
+  #we need to tell docker to build image from this file 
+    build: 
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+    #tell docker that do not try to map folder under /app/node_modules
+      - /app/node_modules
+      - .:/app
+  tests:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - .:/app
+    command: ["npm", "run", "test"]

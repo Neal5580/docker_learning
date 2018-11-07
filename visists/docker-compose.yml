@@ -1,0 +1,21 @@
+#Version of docker-compose
+version : '3'
+
+#Docker services like containers
+services:
+
+  #First containers
+  #image from 'redis'
+  redis-server:
+    image: 'redis'
+
+  #Second containers
+  #build imgae first
+  #then add port forwarding
+  node-app:
+    #restart policy when server crashed
+    restart: always
+    #find Dockerfile in current folder and built image
+    build: .
+    ports:
+      - "4001:8080"
